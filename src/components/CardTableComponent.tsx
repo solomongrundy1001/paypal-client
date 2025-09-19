@@ -75,7 +75,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
 
     return (
         <>
-            <Table clas="mt-12"sName>
+            <Table className="mt-12">
                 <TableCaption>List of Cards</TableCaption>
                 <TableHeader>
                     <TableRow>

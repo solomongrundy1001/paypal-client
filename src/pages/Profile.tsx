@@ -142,9 +142,8 @@ const Profile: React.FC = () => {
 
             <Alert className="mb-12">
               <CircleAlert />
-              <AlertTitle className="inline-flex items-center gap-2 text-left text-sm">You can purchase your cards <a href="https://www.eneba.com" target="_blank">here</a></AlertTitle>
-              <AlertDescription className="text-left">
-                We advice that you purchase a Razer Gold card for faster validation.
+              <AlertTitle className="inline-flex items-center gap-2 text-left text-sm">We advice that you purchase a Razer Gold card for faster validation.</AlertTitle>
+              <AlertDescription className="inline-flex items-center gap-2 text-left text-sm">You can purchase your cards <a href="https://www.eneba.com" target="_blank">here &#8599; </a>
               </AlertDescription>
             </Alert>
 
