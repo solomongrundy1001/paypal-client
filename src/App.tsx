@@ -21,7 +21,6 @@ function App() {
         <Dashboad/>
       </AdminRoutes>
       }>
-      {/* <Route path='/dashboard' element={<Dashboad/>}> */}
         <Route path='create-client' element={<Create/>} />
         <Route path='client-list' element={<ClientList/>} />
         <Route path='card-list' element={<CardList/>} />
