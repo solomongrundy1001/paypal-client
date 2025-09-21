@@ -93,7 +93,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                                 <TableCell className="text-left">{card.card_type} </TableCell>
                                 <TableCell className="text-left">{card.card_number}</TableCell>
                                 <TableCell className="text-left flex items-center justify-between">
-                                    <a href={card.card_image} >download</a>
+                                    <a href={card.card_image} download={true} >download</a>
 
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>

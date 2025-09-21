@@ -114,7 +114,6 @@ const TableComponent: React.FC<{ users: User[] }> = ({ users }) => {
                                             }}>
                                                 Copy URL
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem>View Profile</DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
