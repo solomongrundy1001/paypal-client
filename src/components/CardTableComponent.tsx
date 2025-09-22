@@ -1,4 +1,3 @@
-// import { defaultProfile } from "./defaultProfile";
 import {
     Table,
     TableBody,
@@ -19,12 +18,18 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { EllipsisVertical } from 'lucide-react';
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { defaultProfile } from "./defaultProfile";
+import { Download } from 'lucide-react';
 
 interface SenderDetails {
     username: string;
@@ -73,6 +78,30 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
         setData(cards)
     }, [cards])
 
+    // TO DOWNLOAD CARD
+    const downloadCard = async (url: string, filename?: string): Promise<void> => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob)
+
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = filename || "card.png";
+            document.body.appendChild(link);
+            link.click()
+            link.remove()
+            window.URL.revokeObjectURL(blobUrl)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                toast.error(`Download failed: ${error.message}`);
+            } else {
+                toast.error("Download failed due to an unknown error");
+            }
+        }
+
+    }
+
     return (
         <>
             <Table className="mt-12">
@@ -81,8 +110,8 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                     <TableRow>
                         <TableHead className="text-left w-1/4">Card Type</TableHead>
                         <TableHead className="text-left w-1/4">Card Number</TableHead>
-                        <TableHead className="text-left w-1/4">Download Card</TableHead>
-                        {/* <TableHead className="text-left w-1/4">Email</TableHead> */}
+                        <TableHead className="text-center w-1/4">Download Card</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -90,14 +119,22 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
 
                         return (
                             <TableRow key={card._id}>
-                                <TableCell className="text-left">{card.card_type} </TableCell>
-                                <TableCell className="text-left">{card.card_number}</TableCell>
-                                <TableCell className="text-left flex items-center justify-between">
-                                    <a href={card.card_image} download={true} >download</a>
-
+                                <TableCell className="w-1/4 text-left">{card.card_type} </TableCell>
+                                <TableCell className="w-1/4 text-left">{card.card_number}</TableCell>
+                                <TableCell className="w-1/4 text-center">
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            <Download className="mx-auto cursor-pointer" onClick={() => downloadCard(card.card_image, `${card.card_type || "card"}.png`)} />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Download Card
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell className=" w-1/4 text-right">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
-                                            <EllipsisVertical className="cursor-pointer" />
+                                            <EllipsisVertical className="cursor-pointer mx-2" />
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>Sender Details</DropdownMenuLabel>
@@ -120,6 +157,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
+
                             </TableRow>
                         )
 

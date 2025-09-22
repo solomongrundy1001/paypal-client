@@ -37,7 +37,7 @@ const Success = () => {
                 </CardHeader>
                 <CardContent>
                     <DotLottieReact
-                        src={counter === 0? "/src/assets/IconFailed.lottie" : "/src/assets/MoneyTransfer.lottie"}
+                        src={counter === 0? "/animations/IconFailed.lottie" : "/animations/MoneyTransfer.lottie"}
                         loop = {counter != 0}
                         autoplay
                         className={counter == 0? "w-[250px] m-auto" : "w-full m-auto"}

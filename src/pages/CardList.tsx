@@ -5,28 +5,29 @@ import { toast } from "sonner"
 import CardTableComponent from "@/components/CardTableComponent";
 
 interface SenderDetails {
-    username: string;
-    email: string;
-    avatar: string;
+  username: string;
+  email: string;
+  avatar: string;
 }
 
 interface Card {
-    _id: number;
-    card_type: string;
-    card_number: string;
-    card_image: string;
-    sender_details : SenderDetails[]
+  _id: number;
+  card_type: string;
+  card_number: string;
+  card_image: string;
+  sender_details: SenderDetails[]
 }
 
 type Phase = "idle" | "loading" | "check" | "done";
 
 const CardList = () => {
-    const [cards, setCards] = useState<Card[]>([]) 
-    const [phase, setPhase] = useState<Phase>("idle"); 
+  const [cards, setCards] = useState<Card[]>([])
+  const [phase, setPhase] = useState<Phase>("idle");
 
-      const getCards = async () => {
+  const getCards = async () => {
     const token = localStorage.getItem("token")
-    try {
+    
+    try{
       setPhase("loading");
       const response = await axios.get("https://paypal-backend-e8c3.onrender.com/api/superuser/get-cards", {
         headers: {
@@ -35,7 +36,7 @@ const CardList = () => {
         }
       })
 
-      if(response.data?.data){
+      if (response.data?.data) {
         setCards(response.data.data)
         toast.success(response.data?.message)
       } else {
@@ -58,18 +59,18 @@ const CardList = () => {
     }
   }
 
-    useEffect(() => {
-    const timer = setTimeout(()=> {
+  useEffect(() => {
+    const timer = setTimeout(() => {
       getCards();
-    }, 3000 );
+    }, 3000);
     return () => clearTimeout(timer)
-  }, []) 
+  }, [])
 
   return (
     <>
-    {(phase === "loading" || phase === "check") && (<LoaderWithCheck phase={phase} />)}
-    {phase === "done" && cards.length === 0 && <p>No users found</p>}
-    {phase === "done" && cards.length > 0 && <CardTableComponent cards={cards} />}
+      {(phase === "loading" || phase === "check") && (<LoaderWithCheck phase={phase} />)}
+      {phase === "done" && cards.length === 0 && <p>No users found</p>}
+      {phase === "done" && cards.length > 0 && <CardTableComponent cards={cards} />}
     </>
   )
 }
