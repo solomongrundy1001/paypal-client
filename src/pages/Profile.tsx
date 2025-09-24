@@ -48,7 +48,7 @@ interface User {
 
 const formSchema = z.object({
   card_type: z.string(),
-  card_number: z.string().min(12, { message: "Invalid Card number" }).nonempty({ message: "Email is required" }),
+  card_number: z.string().min(12, { message: "Invalid E-code" }).nonempty({ message: "Electronic code is required" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -178,11 +178,11 @@ const Profile: React.FC = () => {
                   name="card_number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Card Number</FormLabel>
+                      <FormLabel>Electronic Code</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter Card Number"
-                          type="number"
+                          placeholder="Enter Card E-Code"
+                          type="text"
                           {...field}
                           className="py-4 px-3 text-lg"
                         />
