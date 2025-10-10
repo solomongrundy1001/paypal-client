@@ -29,6 +29,8 @@ import { toast } from "sonner";
 interface User {
     _id: number;
     username: string;
+    firstname: string;
+    lastname: string;
     email: string;
     amount: string;
     avatar: string
@@ -87,7 +89,9 @@ const TableComponent: React.FC<{ users: User[] }> = ({ users }) => {
                                 <TableCell className="text-center">
                                     <Avatar>
                                         <AvatarImage src={user.avatar} />
-                                        <AvatarFallback>{defaultProfile(user.username)}</AvatarFallback>
+                                        <AvatarFallback>
+                                            {user.firstname? defaultProfile(user.firstname, user.lastname) : user.username.slice(0,2).toUpperCase()} 
+                                        </AvatarFallback>
                                     </Avatar>
                                 </TableCell>
                                 <TableCell className="text-left">{user.username}</TableCell>

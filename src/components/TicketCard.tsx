@@ -5,14 +5,18 @@ import { Skeleton } from "@/components/ui/skeleton"
 interface TicketCardProps {
   avatar: string;
   username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   amount: string;
   isLoading: boolean
 }
 
-const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, email, amount, isLoading }) => {
-  console.log(isLoading)
-
+const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, firstname, lastname, email, amount, isLoading }) => {
+    const initials = defaultProfile(
+    firstname || username.slice(0,-1) || "N",
+    lastname || username.slice(1, -1) || "A"
+  );
   return (
     <div className="relative w-full max-w-sm m-auto">
       {/* Outer ticket */}
@@ -36,8 +40,8 @@ const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, email, amount
                 <div className="absolute inset-0 rounded-full bg-black/70 z-20"></div>
 
                 {/* Default profile initials */}
-                <div className="absolute inset-0 flex items-center justify-center text-white text-[30px] font-semibold z-30">
-                  <p>{defaultProfile(username)}</p>
+                <div className="absolute inset-0 flex items-center justify-center text-white text-[30px] font-normal z-30">
+                  <p>{initials}</p>
                 </div>
               </div>
             
@@ -52,10 +56,10 @@ const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, email, amount
         {/* Divider Section with indents and dashed line */}
         <div className="relative h-6 bg-transparent">
           {/* Left Circle */}
-          <div className="absolute -left-3 top-1/2 transform bg-zinc-50 -translate-y-1/2 w-6 h-6 bg-background rounded-full z-10"></div>
+          <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-background rounded-full z-10"></div>
 
           {/* Right Circle */}
-          <div className="absolute -right-3 top-1/2 transform bg-zinc-50 -translate-y-1/2 w-6 h-6 bg-background rounded-full z-10"></div>
+          <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-background rounded-full z-10"></div>
 
           {/* Dashed Line */}
           <div className="absolute left-0 right-0 top-1/2 border-t border-dashed border-gray-400 z-0"></div>

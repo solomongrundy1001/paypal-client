@@ -42,6 +42,9 @@ import TicketCard from "@/components/TicketCard";
 
 interface User {
   username: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
   avatar: string;
   amount: string;
   email: string;
@@ -172,7 +175,7 @@ const Profile: React.FC = () => {
                       <FormLabel>Type of Card</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl className="w-full min-w-0">
-                          <SelectTrigger className="w-full flex min-w-0 flex py-6 px-3 text-base">
+                          <SelectTrigger className="w-full flex min-w-0 py-6 px-3 text-base">
                             <SelectValue className="w-full text-left truncate" placeholder="Select the card you purchased for your claim" />
                           </SelectTrigger>
                         </FormControl>
@@ -259,6 +262,8 @@ const Profile: React.FC = () => {
             <TicketCard
               avatar={user?.avatar || ""}
               username={user?.username || "N/A"}
+              firstname={user?.firstname || ""}
+              lastname={user?.lastname || ""}
               email={user?.email || "N/A"}
               amount={user?.amount || "0.00"}
               isLoading={profileLoading}

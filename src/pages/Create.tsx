@@ -27,6 +27,8 @@ import { useNavigate } from 'react-router';
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).nonempty({ message: "Email is required" }),
   username: z.string().min(1, { message: "Username is required" }),
+  firstname: z.string().min(1, { message: "Firstname is required" }),
+  lastname: z.string().min(1, { message: "Lastname is required" }),
   amount: z.string().min(1, { message: "Amount is required" }),
 });
 
@@ -53,6 +55,8 @@ const Create = () => {
 
       const formData = new FormData();
       formData.append("username", values.username);
+      formData.append("firstname", values.firstname);
+      formData.append("lastname", values.lastname);
       formData.append("email", values.email);
       formData.append("amount", values.amount);
 
@@ -97,6 +101,32 @@ const Create = () => {
                 <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter Username" type="text" {...field} className='py-[20px] px-[12px] text-[16px]' />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="firstname"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Firstname" type="text" {...field} className='py-[20px] px-[12px] text-[16px]' />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastname"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Lastname" type="text" {...field} className='py-[20px] px-[12px] text-[16px]' />
                 </FormControl>
                 <FormMessage />
               </FormItem>
