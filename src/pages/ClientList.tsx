@@ -7,6 +7,8 @@ import { toast } from "sonner"
 interface User {
   _id: number;
   username: string;
+  lastname: string;
+  firstname:string;
   email: string;
   avatar: string;
   amount : string

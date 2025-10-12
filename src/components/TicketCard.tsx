@@ -13,10 +13,32 @@ interface TicketCardProps {
 }
 
 const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, firstname, lastname, email, amount, isLoading }) => {
-    const initials = defaultProfile(
-    firstname || username.slice(0,-1) || "N",
+  const initials = defaultProfile(
+    firstname || username.slice(0, -1) || "N",
     lastname || username.slice(1, -1) || "A"
   );
+
+  const displayImage = () => {
+    if (avatar === "https://res.cloudinary.com/db2gycegs/image/upload/v1755418847/user_cfrvgn.png") {
+      return (
+        <div className="absolute w-24 h-24 bg-blue-700/70 rounded-full flex items-center justify-center text-white text-[30px] font-normal left-1/2 -top-12 transform -translate-x-1/2 z-10">
+          <p>{initials}</p>
+        </div>
+      )
+    } else {
+      return (
+        <div className="absolute left-1/2 -top-12 transform -translate-x-1/2 w-24 h-24 z-10">
+          {/* Avatar image */}
+          <img
+            src={avatar}
+            alt="avatar"
+            className="w-24 h-24 rounded-full  shadow-md object-cover"
+          />
+        </div>
+      )
+    }
+  }
+  console.log(displayImage())
   return (
     <div className="relative w-full max-w-sm m-auto">
       {/* Outer ticket */}
@@ -25,32 +47,32 @@ const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, firstname, la
         <div className="relative px-6 pt-16 pb-6 text-center rounded-t-xl">
           {/* Avatar Container */}
           {
-            isLoading? (          
+            isLoading ? (
               <Skeleton className="h-24 w-24 rounded-full z-40 mx-auto mb-2" />
-            ):(
-              <div className="absolute left-1/2 -top-12 transform -translate-x-1/2 w-24 h-24 z-10">
-                {/* Avatar image */}
-                <img
-                  src={avatar}
-                  alt="avatar"
-                  className="w-24 h-24 rounded-full border-[6px] border-white shadow-md object-cover"
-                />
+            ) : (
+              // <div className="absolute left-1/2 -top-12 transform -translate-x-1/2 w-24 h-24 z-10">
+              //   {/* Avatar image */}
+              //   <img
+              //     src={avatar}
+              //     alt="avatar"
+              //     className="w-24 h-24 rounded-full border-[6px] border-white shadow-md object-cover"
+              //   />
 
-                {/* Dark transparent overlay */}
-                <div className="absolute inset-0 rounded-full bg-black/70 z-20"></div>
+              //   {/* Dark transparent overlay */}
+              //   <div className="absolute inset-0 rounded-full bg-black/70 z-20"></div>
 
-                {/* Default profile initials */}
-                <div className="absolute inset-0 flex items-center justify-center text-white text-[30px] font-normal z-30">
-                  <p>{initials}</p>
-                </div>
-              </div>
-            
+              //   {/* Default profile initials */}
+              //   <div className="absolute inset-0 flex items-center justify-center text-white text-[30px] font-normal z-30">
+              //     <p>{initials}</p>
+              //   </div>
+              // </div>
+              displayImage()
             )
           }
-          {isLoading? ( <Skeleton className="h-4 w-[250px] z-40 mx-auto mb-2" />) : (<h2 className="text-xl font-semibold">{username}</h2>)}
-          {isLoading? ( <Skeleton className="h-4 w-[200px] z-40 mx-auto mb-2" />) : (<p className="text-gray-600 text-sm">{email}</p>)}
-          
-          
+          {isLoading ? (<Skeleton className="h-4 w-[250px] z-40 mx-auto mb-2" />) : (<h2 className="text-xl font-semibold">{username}</h2>)}
+          {isLoading ? (<Skeleton className="h-4 w-[200px] z-40 mx-auto mb-2" />) : (<p className="text-gray-600 text-sm">{email}</p>)}
+
+
         </div>
 
         {/* Divider Section with indents and dashed line */}
@@ -67,11 +89,9 @@ const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, firstname, la
 
         {/* Bottom Section */}
         <div className="px-6 py-4 text-center rounded-b-xl bg-white/80">
-          {isLoading? ( <Skeleton className="h-4 w-[150px] z-40 mx-auto mb-2" />) : (<p className="text-sm text-gray-500 mb-1 text-[20px] ">Claim Amount</p>)}
-          {isLoading? ( <Skeleton className="h-4 w-[100px] z-40 mx-auto mb-2" />) : (<p className="text-2xl font-bold text-gray-800 text-[30px] ">${amount}</p>)}
+          {isLoading ? (<Skeleton className="h-4 w-[150px] z-40 mx-auto mb-2" />) : (<p className="text-sm text-gray-500 mb-1 text-[20px] ">Claim Amount</p>)}
+          {isLoading ? (<Skeleton className="h-4 w-[100px] z-40 mx-auto mb-2" />) : (<p className="text-2xl font-bold text-gray-800 text-[30px] ">${amount}</p>)}
 
-          
-          
         </div>
       </div>
     </div>

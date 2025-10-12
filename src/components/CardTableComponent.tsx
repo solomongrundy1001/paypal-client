@@ -33,6 +33,8 @@ import { Download } from 'lucide-react';
 
 interface SenderDetails {
     username: string;
+    firstname: string;
+    lastname: string;
     email: string;
     avatar: string;
 }
@@ -78,6 +80,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
         setData(cards)
     }, [cards])
 
+    console.log(cards)
     // TO DOWNLOAD CARD
     const downloadCard = async (url: string, filename?: string): Promise<void> => {
         try {
@@ -116,7 +119,10 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                 </TableHeader>
                 <TableBody>
                     {data.map((card) => {
-
+                        const initials = defaultProfile(
+                            card.sender_details[0].firstname || card.sender_details[0].username.slice(0, -1).toUpperCase() || "N",
+                            card.sender_details[0].lastname || card.sender_details[0].username.slice(1, -1).toUpperCase() || "A"
+                        );
                         return (
                             <TableRow key={card._id}>
                                 <TableCell className="w-1/4 text-left">{card.card_type} </TableCell>
@@ -142,7 +148,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                                             <DropdownMenuItem>
                                                 <Avatar>
                                                     <AvatarImage src={card.sender_details[0].avatar} />
-                                                    <AvatarFallback>{defaultProfile(card.sender_details[0].username)}</AvatarFallback>
+                                                    <AvatarFallback>{initials} </AvatarFallback>
                                                 </Avatar>
 
                                             </DropdownMenuItem>

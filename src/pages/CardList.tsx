@@ -6,6 +6,8 @@ import CardTableComponent from "@/components/CardTableComponent";
 
 interface SenderDetails {
   username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   avatar: string;
 }
