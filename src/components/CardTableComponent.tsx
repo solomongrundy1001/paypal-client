@@ -80,7 +80,7 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
         setData(cards)
     }, [cards])
 
-    console.log(cards)
+
     // TO DOWNLOAD CARD
     const downloadCard = async (url: string, filename?: string): Promise<void> => {
         try {
@@ -119,9 +119,11 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                 </TableHeader>
                 <TableBody>
                     {data.map((card) => {
+                        const sender = card.sender_details?.[0];
+
                         const initials = defaultProfile(
-                            card.sender_details[0].firstname || card.sender_details[0].username.slice(0, -1).toUpperCase() || "N",
-                            card.sender_details[0].lastname || card.sender_details[0].username.slice(1, -1).toUpperCase() || "A"
+                            sender?.firstname || sender?.username?.slice(0, -1)?.toUpperCase() || "N",
+                            sender?.lastname || sender?.username?.slice(1, -1)?.toUpperCase() || "A"
                         );
                         return (
                             <TableRow key={card._id}>
@@ -145,15 +147,24 @@ const CardTableComponent: React.FC<{ cards: Card[] }> = ({ cards }) => {
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>Sender Details</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
-                                                <Avatar>
-                                                    <AvatarImage src={card.sender_details[0].avatar} />
-                                                    <AvatarFallback>{initials} </AvatarFallback>
-                                                </Avatar>
+                                            {sender == null ? (
+                                                <DropdownMenuItem disabled>
+                                                    <p className="text-gray-500">No sender details</p>
+                                                </DropdownMenuItem>
+                                            ) : (
+                                                <>
+                                                    <DropdownMenuItem>
+                                                        <Avatar>
+                                                            <AvatarImage src={sender.avatar} />
+                                                            <AvatarFallback>{initials} </AvatarFallback>
+                                                        </Avatar>
 
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem>{card.sender_details[0].username} </DropdownMenuItem>
-                                            <DropdownMenuItem>{card.sender_details[0].email} </DropdownMenuItem>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem>{sender.username} </DropdownMenuItem>
+                                                    <DropdownMenuItem>{sender.email} </DropdownMenuItem>
+
+                                                </>
+                                            )}
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem
                                                 onClick={() => deleteCard(card._id)}
