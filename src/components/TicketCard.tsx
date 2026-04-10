@@ -38,7 +38,6 @@ const TicketCard: React.FC<TicketCardProps> = ({ avatar, username, firstname, la
       )
     }
   }
-  console.log(displayImage())
   return (
     <div className="relative w-full max-w-sm m-auto">
       {/* Outer ticket */}
