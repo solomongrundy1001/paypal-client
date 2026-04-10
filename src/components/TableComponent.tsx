@@ -114,7 +114,6 @@ const TableComponent: React.FC<{ users: User[] }> = ({ users }) => {
                                             <DropdownMenuItem
                                                 onClick={() => {
                                                 navigator.clipboard.writeText(`${window.location.origin}/receiver/${user._id}/confirmation-gateway`)
-                                                console.log("user link", `${window.location.origin}/receiver/${user._id}/confirmation-gateway`)
                                                 toast.success("Profile URL copied!")
                                             }}>
                                                 Copy URL
